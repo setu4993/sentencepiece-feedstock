@@ -17,8 +17,8 @@ fi
 
 if [[ $(uname) == Darwin ]]; then
     LDFLAGS="${LDFLAGS//-pie/}"
-    export CXX="g++"
-    export CC="gcc"
+    export CXX="clang++"
+    export CC="clang"
     export CXXFLAGS="${CXXFLAGS} -I$(xcrun --show-sdk-path)/usr/include -stdlib=libc++ -std=c++11 -resource-dir $PREFIX/include"
     export LIBS="-lc++"
     export CPPFLAGS="${CPPFLAGS} -I${PREFIX}/include"
