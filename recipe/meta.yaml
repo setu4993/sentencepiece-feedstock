@@ -20,12 +20,12 @@ requirements:
     - pkg-config
     - gperftools
     - make
-    - protobuf
+    - libprotobuf
   host:
     - pip
     - python
     - gperftools
-    - protobuf
+    - libprotobuf
   run:
     - python
     - gperftools
