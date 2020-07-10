@@ -17,6 +17,8 @@ fi
 
 if [[ $(uname) == Darwin ]]; then
     LDFLAGS="${LDFLAGS//-pie/}"
+    export CXX="g++"
+    export CC="gcc"
     export CXXFLAGS="${CXXFLAGS} -I$(xcrun --show-sdk-path)/usr/include -stdlib=libc++ -std=c++11 -resource-dir $PREFIX/include"
     export LIBS="-lc++"
     export CPPFLAGS="${CPPFLAGS} -I${PREFIX}/include"
@@ -30,8 +32,6 @@ if [[ $(uname) == Darwin ]]; then
         -DCMAKE_CXX_LINK_FLAGS="${LDFLAGS}" \
         -DCMAKE_EXE_LINKER_FLAGS="${LDFLAGS}" \
         -DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
-        -DCC_FOR_BUILD=${CC} \
-        -DCXX_FOR_BUILD=${CXX} \
         "${CMAKE_PLATFORM_FLAGS[@]}" \
         ..
 fi
