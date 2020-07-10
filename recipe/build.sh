@@ -16,8 +16,11 @@ if [[ "$target_platform" == linux* ]]; then
 fi
 
 if [[ $(uname) == Darwin ]]; then
+    LDFLAGS="${LDFLAGS//-pie/}"
     export CXXFLAGS="${CXXFLAGS} -I$(xcrun --show-sdk-path)/usr/include -stdlib=libc++ -std=c++11 -resource-dir $PREFIX/include"
     export LIBS="-lc++"
+    export CPPFLAGS="${CPPFLAGS} -I${PREFIX}/include"
+    export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib"
     export CLANG_RESOURCE_DIR="${CLANG_INSTALL_RESOURCE_DIR}/include"
     cmake \
         -DCMAKE_OSX_SYSROOT=${CONDA_BUILD_SYSROOT} \
