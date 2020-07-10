@@ -30,6 +30,8 @@ if [[ $(uname) == Darwin ]]; then
         -DCMAKE_CXX_LINK_FLAGS="${LDFLAGS}" \
         -DCMAKE_EXE_LINKER_FLAGS="${LDFLAGS}" \
         -DCMAKE_CXX_FLAGS="${CXXFLAGS}" \
+        -DCC_FOR_BUILD=${CC} \
+        -DCXX_FOR_BUILD=${CXX} \
         "${CMAKE_PLATFORM_FLAGS[@]}" \
         ..
 fi
