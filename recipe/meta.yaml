@@ -11,7 +11,7 @@ source:
 
 build:
   number: 1
-  skip: True  # [py<36 or win or osx]
+  skip: True  # [py<36 or win]
 
 requirements:
   build:
@@ -20,10 +20,12 @@ requirements:
     - pkg-config
     - gperftools
     - make
+    - protobuf
   host:
     - pip
     - python
     - gperftools
+    - protobuf
   run:
     - python
     - gperftools
