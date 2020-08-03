@@ -6,16 +6,8 @@ export CPATH=${PREFIX}/include
 export INCLUDE=${PREFIX}/include
 export LIBRARY_PATH=${PREFIX}/lib
 
-if [[ "$target_platform" == linux* ]]; then
-    cmake \
-        -DCMAKE_INSTALL_PREFIX=$PREFIX \
-        -DCMAKE_INSTALL_LIBDIR=$PREFIX/lib \
-        -DCMAKE_AR="${AR}" \
-        -DSPM_ENABLE_TCMALLOC=OFF \
-        -S ..
-fi
-
-if [ "$(uname)" == "Darwin" ]; then
+if [ "$(uname)" == "Darwin" ];
+then
     LDFLAGS="${LDFLAGS//-pie/}"
     export CXX="clang++"
     export CC="clang"
@@ -24,6 +16,28 @@ if [ "$(uname)" == "Darwin" ]; then
     export CPPFLAGS="${CPPFLAGS} -I${PREFIX}/include"
     export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib"
     export CLANG_RESOURCE_DIR="${CLANG_INSTALL_RESOURCE_DIR}/include"
+fi
+
+./configure --prefix="${PREFIX}" \
+            --build=${HOST}      \
+            --host=${HOST}       \
+            --with-pic           \
+            --with-zlib          \
+            --enable-shared      \
+            CC_FOR_BUILD=${CC}   \
+            CXX_FOR_BUILD=${CXX}
+
+if [ "$(uname)" == "Linux" ];
+then
+    cmake \
+        -DCMAKE_INSTALL_PREFIX=$PREFIX \
+        -DCMAKE_INSTALL_LIBDIR=$PREFIX/lib \
+        -DCMAKE_AR="${AR}" \
+        -DSPM_ENABLE_TCMALLOC=OFF \
+        -S ..
+elif [ "$(uname)" == "Darwin" ];
+then
+    LDFLAGS="${LDFLAGS//-pie/}"
     cmake \
         -DCMAKE_OSX_SYSROOT=${CONDA_BUILD_SYSROOT} \
         -DCMAKE_INSTALL_PREFIX=${PREFIX} \
@@ -39,7 +53,8 @@ fi
 make -j"${CPU_COUNT}"
 make install
 
-if [[ "$target_platform" == linux* ]]; then
+if [ "$(uname)" == "Linux" ];
+then
   ldconfig -v -N
 if [ "$(uname)" == "Darwin" ]; then
   update_dyld_shared_cache
