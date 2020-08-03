@@ -15,11 +15,11 @@ if [[ "$target_platform" == linux* ]]; then
         -S ..
 fi
 
-if [[ $(uname) == Darwin ]]; then
+if [ "$(uname)" == "Darwin" ]; then
     LDFLAGS="${LDFLAGS//-pie/}"
     export CXX="clang++"
     export CC="clang"
-    export CXXFLAGS="${CXXFLAGS} -I$(xcrun --show-sdk-path)/usr/include -stdlib=libc++ -std=c++11 -resource-dir $PREFIX/include"
+    export CXXFLAGS="${CXXFLAGS} -stdlib=libc++ -std=c++11"
     export LIBS="-lc++"
     export CPPFLAGS="${CPPFLAGS} -I${PREFIX}/include"
     export LDFLAGS="${LDFLAGS} -L${PREFIX}/lib"
@@ -36,12 +36,12 @@ if [[ $(uname) == Darwin ]]; then
         ..
 fi
 
-make -j $(nproc)
+make -j"${CPU_COUNT}"
 make install
 
 if [[ "$target_platform" == linux* ]]; then
   ldconfig -v -N
-elif [[ $target_platform == "osx-64" ]]; then
+if [ "$(uname)" == "Darwin" ]; then
   update_dyld_shared_cache
 fi
 
