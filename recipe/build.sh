@@ -18,15 +18,6 @@ then
     export CLANG_RESOURCE_DIR="${CLANG_INSTALL_RESOURCE_DIR}/include"
 fi
 
-./configure --prefix="${PREFIX}" \
-            --build=${HOST}      \
-            --host=${HOST}       \
-            --with-pic           \
-            --with-zlib          \
-            --enable-shared      \
-            CC_FOR_BUILD=${CC}   \
-            CXX_FOR_BUILD=${CXX}
-
 if [ "$(uname)" == "Linux" ];
 then
     cmake \
