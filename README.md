@@ -179,4 +179,3 @@ Feedstock Maintainers
 
 * [@setu4993](https://github.com/setu4993/)
 
-
