@@ -1,39 +1,45 @@
 {% set name = "sentencepiece" %}
-{% set version = "0.1.91" %}
+{% set version = "0.1.95" %}
 
 package:
   name: "{{ name|lower }}"
   version: "{{ version }}"
 
-source: 
+source:
   url: https://github.com/google/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: acbc7ea12713cd2a8d64892f8d2033c7fd2bb4faecab39452496120ace9a4b1b
+  sha256: 1c0bd83e03f71a10fc934b7ce996e327488b838587f03159fd392c77c7701389
 
 build:
-  number: 4
-  skip: True  # [py<36 or osx]
+  number: 0
+  skip: True  # [py<36]
 
 requirements:
   build:
     - cmake
     - {{ compiler('cxx') }}
-    - pkg-config
     - gperftools  # [unix]
     - make
+    - pkg-config
   host:
     - pip
     - python
-    - gperftools  # [unix]
   run:
     - python
-    - gperftools  # [unix]
 
 test:
   imports:
     - sentencepiece
   commands:
-    - spm_export_vocab --help  # [unix]
-    - spm_normalize --help  # [unix]
+    - pip check
+    - cd python && pytest test
+    - spm_export_vocab --help  # [linux]
+    - spm_normalize --help  # [linux]
+  requires:
+    - pip
+    - pytest
+  source_files:
+    - python/test
+    - data
 
 about:
   home: "https://github.com/google/sentencepiece/"
