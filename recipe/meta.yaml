@@ -1,4 +1,4 @@
-{% set version = "0.1.95" %}
+{% set version = "0.1.91" %}
 
 package:
   name: sentencepiece
@@ -9,7 +9,7 @@ source:
   sha256: 1c0bd83e03f71a10fc934b7ce996e327488b838587f03159fd392c77c7701389
 
 build:
-  number: 0
+  number: 5
 
 requirements:
   build:
