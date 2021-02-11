@@ -1,17 +1,15 @@
-{% set name = "sentencepiece" %}
 {% set version = "0.1.95" %}
 
 package:
-  name: "{{ name|lower }}"
-  version: "{{ version }}"
+  name: sentencepiece
+  version: {{ version }}
 
 source:
-  url: https://github.com/google/{{ name }}/archive/v{{ version }}.tar.gz
+  url: https://github.com/google/sentencepiece/archive/v{{ version }}.tar.gz
   sha256: 1c0bd83e03f71a10fc934b7ce996e327488b838587f03159fd392c77c7701389
 
 build:
   number: 0
-  skip: True  # [py<36]
 
 requirements:
   build:
@@ -31,17 +29,18 @@ requirements:
 test:
   imports:
     - sentencepiece
-  commands:
-    - pip check
-    - cd python && pytest test
-    - spm_export_vocab --help  # [linux]
-    - spm_normalize --help  # [linux]
   requires:
     - pip
     - pytest
   source_files:
     - python/test
     - data
+  commands:
+    - pip check
+    - spm_export_vocab --help  # [linux]
+    - spm_normalize --help     # [linux]
+    # upstream test suite expects to be run from PKG_ROOT/python
+    - cd python && pytest test
 
 about:
   home: "https://github.com/google/sentencepiece/"
