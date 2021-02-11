@@ -6,7 +6,7 @@ package:
 
 source:
   url: https://github.com/google/sentencepiece/archive/v{{ version }}.tar.gz
-  sha256: 1c0bd83e03f71a10fc934b7ce996e327488b838587f03159fd392c77c7701389
+  sha256: acbc7ea12713cd2a8d64892f8d2033c7fd2bb4faecab39452496120ace9a4b1b
 
 build:
   number: 5
